@@ -86,10 +86,10 @@ class Firm {
             PrintWriter out = new PrintWriter(csvFile);
             //out.println("Degree of Tacit Collusion of this matrix: " + simulationRun.getDegreeOfTacitCollusion());
             // Print whole qmatrix
-            // for (int i = 0; i < qlearning.getQMatrix().length; i++) {
-            for (int i = 0; i < ((qlearning.getQMatrix().length+1)/SimulationManager.actionSetRedFactor)+1; i++) {
-                //for (int j = 0; j < qlearning.getQMatrix().length; j++) {
-                for (int j = 0; j < ((qlearning.getQMatrix().length+1)/SimulationManager.actionSetRedFactor)+1; j++) {
+            for (int i = 0; i < qlearning.getQMatrix().length; i++) {
+            //for (int i = 0; i < ((qlearning.getQMatrix().length+1)/SimulationManager.actionSetRedFactor)+1; i++) {
+                for (int j = 0; j < qlearning.getQMatrix().length; j++) {
+                //for (int j = 0; j < ((qlearning.getQMatrix().length+1)/SimulationManager.actionSetRedFactor)+1; j++) {
                     //out.println(i + ". Zeile und " + j + ".Spalte, Wert:" + (qlearning.getQMatrix()[i][j]) + " ");
                     out.print((qlearning.getQMatrix()[i][j]) + ",");
                 }

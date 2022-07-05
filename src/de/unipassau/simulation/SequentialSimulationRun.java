@@ -93,9 +93,9 @@ class SequentialSimulationRun extends SimulationRun {
 
 
 
-                for (Firm firm : firms) {
+                /*for (Firm firm : firms) {
                     data.add(super.getNumberOfPeriods() + "," + ((firm.getAction()/5)*5));
-                }
+                }*/
 
 
                 super.setNumberOfPeriods(super.getNumberOfPeriods() + 1);
@@ -109,13 +109,13 @@ class SequentialSimulationRun extends SimulationRun {
         for (Firm firm : firms) {
             //if ((super.getNumberOfConvergedPeriods() == SimulationManager.minNumberOfConvergedPeriods) || super.getNumberOfConvergedPeriods() == SimulationManager.maxNumberOfPeriods-1) {
                 if (super.getNumberOfPeriods() == SimulationManager.maxNumberOfPeriods) {
-                        //firm.MatrixOutput(firm);
+                        firm.MatrixOutput(firm);
                         //System.out.println(firm.getAction());
 
                 }
         }
 
-        try {
+        /*try {
 
             File csvFileActions = new File("out/SEQ-P-2/AllActions_"+Competition.omega+"Omega.csv");
             PrintWriter out = new PrintWriter(csvFileActions);
@@ -125,7 +125,7 @@ class SequentialSimulationRun extends SimulationRun {
             out.close();
         } catch (Exception ex) {
 
-        }
+        }*/
 
         //System.out.println("Maximale Periode: " + getNumberOfPeriods());
 

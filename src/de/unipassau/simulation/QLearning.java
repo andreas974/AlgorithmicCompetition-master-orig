@@ -105,7 +105,7 @@ class QLearning {
             index = getMaxActionIndex(state);
         } else {
             // Explore
-            index = rnd.nextInt(SimulationManager.sizeOfActionSet);
+            index = ((rnd.nextInt(SimulationManager.sizeOfActionSet)/5)*5);
         }
 
         return index;
@@ -125,7 +125,7 @@ class QLearning {
         int maxIndex = 0;
 
         for (int i = 0; i < SimulationManager.sizeOfActionSet; i++) {
-            value = q[state/SimulationManager.actionSetRedFactor][i/SimulationManager.actionSetRedFactor];
+            value = q[state][i];
 
             if (value > maxValue) {
                 maxValue = value;
@@ -150,10 +150,10 @@ class QLearning {
         int newState = getState(actionsOfOtherFirms);
 
         // Observe maxQ for the new state.
-        double nextMaxQ = q[newState/SimulationManager.actionSetRedFactor][getMaxActionIndex(newState)/SimulationManager.actionSetRedFactor];
+        double nextMaxQ = q[newState][getMaxActionIndex(newState)];
 
         // Update corresponding Q-matrix cell.
-        q[state/SimulationManager.actionSetRedFactor][action/SimulationManager.actionSetRedFactor] = (1 - parameter.alpha) * q[state/SimulationManager.actionSetRedFactor][action/SimulationManager.actionSetRedFactor] + parameter.alpha * (reward + parameter.delta * nextMaxQ);
+        q[state][action] = (1 - parameter.alpha) * q[state][action] + parameter.alpha * (reward + parameter.delta * nextMaxQ);
     }
 
 
@@ -173,7 +173,7 @@ class QLearning {
         int newState = getState(actionsOfOtherFirms);
 
         // Observe maxQ for new state S'.
-        double nextMaxQ = q[newState/SimulationManager.actionSetRedFactor][getMaxActionIndex(newState)/SimulationManager.actionSetRedFactor];
+        double nextMaxQ = q[newState][getMaxActionIndex(newState)];
 
         // Calculate the total discounted reward (profit) by discounting each accrued reward (profits).
         double discountedTotalReward = 0;
@@ -186,7 +186,7 @@ class QLearning {
         discountedTotalReward = discountedTotalReward + Math.pow(parameter.delta, index) * nextMaxQ;
 
         // Update corresponding Q-matrix cell.
-        q[state/SimulationManager.actionSetRedFactor][action/SimulationManager.actionSetRedFactor] = (1 - parameter.alpha) * q[state/SimulationManager.actionSetRedFactor][action/SimulationManager.actionSetRedFactor] + parameter.alpha * discountedTotalReward;
+        q[state][action] = (1 - parameter.alpha) * q[state][action] + parameter.alpha * discountedTotalReward;
     }
 
     /**
