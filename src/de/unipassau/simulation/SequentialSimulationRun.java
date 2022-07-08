@@ -108,7 +108,7 @@ class SequentialSimulationRun extends SimulationRun {
 
         for (Firm firm : firms) {
             //if ((super.getNumberOfConvergedPeriods() == SimulationManager.minNumberOfConvergedPeriods) || super.getNumberOfConvergedPeriods() == SimulationManager.maxNumberOfPeriods-1) {
-                if (super.getNumberOfPeriods() == SimulationManager.maxNumberOfPeriods) {
+                if (super.getNumberOfPeriods() == SimulationManager.maxNumberOfPeriods || super.getNumberOfConvergedPeriods() == SimulationManager.minNumberOfConvergedPeriods) {
                         firm.MatrixOutput(firm);
                         //System.out.println(firm.getAction());
 
