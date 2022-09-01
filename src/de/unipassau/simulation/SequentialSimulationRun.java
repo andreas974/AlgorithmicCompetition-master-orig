@@ -51,6 +51,11 @@ class SequentialSimulationRun extends SimulationRun {
                 // Set the current firm's updated action.
                 currentFirm.setAction(actionOfCurrentFirm);
 
+                //Set deviation for current firm
+                /*if (super.getNumberOfPeriods()==49000005){
+                    currentFirm.setAction(55);
+                }*/
+
                 /*
                  Set the actions of all other firms according to their last action, because they are not allowed
                  to change their actions in this period
@@ -81,35 +86,58 @@ class SequentialSimulationRun extends SimulationRun {
                         //System.out.println(firm.getAction());
 
                     }
-                }
-
-                 */
+                }*/
 
                 for (Firm firm : firms) {
                     //System.out.println(super.getNumberOfPeriods() + "," + ((firm.getAction()/SimulationManager.actionSetRedFactor)*SimulationManager.actionSetRedFactor));
-                    //System.out.println(super.getNumberOfPeriods() + "," + firm.getAction());
+                    //System.out.println(super.getNumberOfPeriods() + "," + firm.getAction()/5 + "," + firm.getProfit());
                     //System.out.println(super.getNumberOfPeriods() + "," + firm.getActionfromQMatrix());
                 }
 
+                //Selected Periods
+                /*if (super.getNumberOfPeriods() >= 49000000 && super.getNumberOfPeriods() <= 49000020) {
+                    for (Firm firm : firms) {
+                        data.add(super.getNumberOfPeriods() + "," + (firm.getAction() / 5) + "," + firm.getProfit());
+                    }
+                }*/
 
-
+                //All Periods
                 /*for (Firm firm : firms) {
-                    data.add(super.getNumberOfPeriods() + "," + ((firm.getAction()/5)*5));
+                        data.add(super.getNumberOfPeriods() + "," + (firm.getAction() / 5) + "," + firm.getProfit());
                 }*/
 
 
                 super.setNumberOfPeriods(super.getNumberOfPeriods() + 1);
             }
+
+
+
+
             // If iterator.hasNext() is false, then start over with the first firm.
             else {
                 iterator = firms.iterator();
             }
+            for (Firm firm : firms) {
+                if ((super.getNumberOfConvergedPeriods() == SimulationManager.minNumberOfConvergedPeriods) || super.getNumberOfConvergedPeriods() == SimulationManager.maxNumberOfPeriods-1) {
+                //if (super.getNumberOfPeriods() == SimulationManager.maxNumberOfPeriods) {
+
+                //after every millionth period
+                //if (super.getNumberOfPeriods() % 1000000 == 0) {
+                    firm.MatrixOutput(firm);
+                    //System.out.println(firm.getAction());
+
+                }
+            }
+
         }
 
         for (Firm firm : firms) {
-            //if ((super.getNumberOfConvergedPeriods() == SimulationManager.minNumberOfConvergedPeriods) || super.getNumberOfConvergedPeriods() == SimulationManager.maxNumberOfPeriods-1) {
-                if (super.getNumberOfPeriods() == SimulationManager.maxNumberOfPeriods || super.getNumberOfConvergedPeriods() == SimulationManager.minNumberOfConvergedPeriods) {
-                        firm.MatrixOutput(firm);
+            if ((super.getNumberOfConvergedPeriods() == SimulationManager.minNumberOfConvergedPeriods) || super.getNumberOfConvergedPeriods() == SimulationManager.maxNumberOfPeriods-1) {
+                //if (super.getNumberOfPeriods() == SimulationManager.maxNumberOfPeriods) {
+
+                //after every millionth period
+                //if (super.getNumberOfPeriods() % 1000000 == 0) {
+                        //firm.MatrixOutput(firm);
                         //System.out.println(firm.getAction());
 
                 }
@@ -117,7 +145,7 @@ class SequentialSimulationRun extends SimulationRun {
 
         /*try {
 
-            File csvFileActions = new File("out/SEQ-P-2/AllActions_"+Competition.omega+"Omega.csv");
+            File csvFileActions = new File("out/SEQ-P-2/AllActions_RunNo_" + getSimulationRunNumber() + ".csv");
             PrintWriter out = new PrintWriter(csvFileActions);
             for (String action:data){
                 out.println(action);

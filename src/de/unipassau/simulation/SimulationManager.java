@@ -10,14 +10,14 @@ import java.util.concurrent.TimeUnit;
 
 class SimulationManager {
 
-    static final SimulationRun.Timing TIMING = SimulationRun.Timing.SIMULTANEOUS;       // Timing of interaction among firms
+    static final SimulationRun.Timing TIMING = SimulationRun.Timing.SEQUENTIAL;       // Timing of interaction among firms
     static final Competition.Type COMPETITION_TYPE = Competition.Type.PRICE;         // Type of competition between firms
     static final int MARKET_SIZE = 2;                                                   // Number of firms in the market
 
     // Simulation settings
     static final int numberOfSimulationRuns = 1;                                       // Desired number of single simulation runs
     static final int sizeOfActionSet = (int) Competition.omega +1;                                             // Total number of possible states and actions
-    static final int actionSetRedFactor = 1;                                            //100/actionSetRedFactor = Number of Actions
+    static final int actionSetRedFactor = 5;                                            //100/actionSetRedFactor = Number of Actions
     // Maximum number of periods per simulation run
     static final int maxNumberOfPeriods = 50000000;
     static final int minNumberOfConvergedPeriods = (int) (maxNumberOfPeriods * 0.1);    // Number of identical periods necessary to assume convergence of the algorithms
@@ -28,7 +28,7 @@ class SimulationManager {
     private final HashMap<Treatment, QLearning.Parameter> treatmentParameters = new HashMap<>() {{
         // For simultaneous interaction
         put(new Treatment(SimulationRun.Timing.SIMULTANEOUS, Competition.Type.PRICE, 2),
-                new QLearning.Parameter(0.02, 0.99));
+                new QLearning.Parameter(0.14, 0.99));
         put(new Treatment(SimulationRun.Timing.SIMULTANEOUS, Competition.Type.PRICE, 3),
                 new QLearning.Parameter(0.02, 0.99, 1.0));
         put(new Treatment(SimulationRun.Timing.SIMULTANEOUS, Competition.Type.QUANTITY, 2),
@@ -38,7 +38,7 @@ class SimulationManager {
 
         // For sequential interactions
         put(new Treatment(SimulationRun.Timing.SEQUENTIAL, Competition.Type.PRICE, 2),
-                new QLearning.Parameter(0.14, 0.99));
+                new QLearning.Parameter(0.165, 0.99));
         put(new Treatment(SimulationRun.Timing.SEQUENTIAL, Competition.Type.PRICE, 3),
                 new QLearning.Parameter(0.14, 0.99, 1.0));
         put(new Treatment(SimulationRun.Timing.SEQUENTIAL, Competition.Type.QUANTITY, 2),
@@ -89,8 +89,7 @@ class SimulationManager {
                 "Simulating " + numberOfSimulationRuns + " runs "
                 + "interacting " + TIMING + "LY "
                 + "in a " + COMPETITION_TYPE + " competition "
-                + "with " + MARKET_SIZE + " firms with Omega: " + (sizeOfActionSet-1)
-                + ", (alpha = " + qLearningParameter.getAlpha() + "; "
+                + "with " + MARKET_SIZE + " firms, (alpha = " + qLearningParameter.getAlpha() + "; "
                 + "delta = " + qLearningParameter.getDelta();
 
         if (MARKET_SIZE > 2) {
@@ -120,6 +119,10 @@ class SimulationManager {
         double deltaStart = 0.80;
         double deltaEnd = 0.99;
         double deltaStep = 0.01;
+
+        /*double deltaStart = 0.9990;
+        double deltaEnd = 0.9999;
+        double deltaStep = 0.0001;*/
 
         double fixedGamma = 1.0;
 
@@ -157,7 +160,7 @@ class SimulationManager {
 
             System.out.println("#");
 
-            for (double j = deltaStart; Calculation.round(j, 2) <= deltaEnd; j = j + deltaStep) {
+            for (double j = deltaStart; Calculation.round(j, 4) <= deltaEnd; j = j + deltaStep) {
 
                 /*
                 The arrays' results of the previous simulation runs are deleted from the Lists

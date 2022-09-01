@@ -55,7 +55,19 @@ class QLearning {
         numberOfEpisodes++;
 
         // Decrease epsilon.
+        //if loop only for analytic porpuses
+        /*if (numberOfEpisodes < 12500000) {
+            parameter.decreaseEpsilon(numberOfEpisodes);
+        }
+        else if (numberOfEpisodes >= 12500000 && numberOfEpisodes < 15000000){
+            parameter.epsilon = 0.1;
+        }
+        else*/
         parameter.decreaseEpsilon(numberOfEpisodes);
+
+        /*if (numberOfEpisodes >= 12500000 && numberOfEpisodes < 15000000) {
+            System.out.println("Periode: " + numberOfEpisodes + ", Epsilon: " + parameter.epsilon);
+        }*/
 
         return action;
     }
@@ -101,6 +113,7 @@ class QLearning {
         int index;
 
         if (rnd.nextDouble() > parameter.epsilon || numberOfEpisodes > (maxNumberOfPeriods - 1000000)) {
+        //if (rnd.nextDouble() > parameter.epsilon || numberOfEpisodes > (maxNumberOfPeriods - 1000000) || numberOfEpisodes > 25000000) {
             // Exploit
             index = getMaxActionIndex(state);
         } else {
@@ -125,7 +138,7 @@ class QLearning {
         int maxIndex = 0;
 
         for (int i = 0; i < SimulationManager.sizeOfActionSet; i++) {
-            value = q[state][i];
+            value = q[state/SimulationManager.actionSetRedFactor][i/SimulationManager.actionSetRedFactor];
 
             if (value > maxValue) {
                 maxValue = value;
@@ -150,10 +163,10 @@ class QLearning {
         int newState = getState(actionsOfOtherFirms);
 
         // Observe maxQ for the new state.
-        double nextMaxQ = q[newState][getMaxActionIndex(newState)];
+        double nextMaxQ = q[newState/SimulationManager.actionSetRedFactor][getMaxActionIndex(newState)/SimulationManager.actionSetRedFactor];
 
         // Update corresponding Q-matrix cell.
-        q[state][action] = (1 - parameter.alpha) * q[state][action] + parameter.alpha * (reward + parameter.delta * nextMaxQ);
+        q[state/SimulationManager.actionSetRedFactor][action/SimulationManager.actionSetRedFactor] = (1 - parameter.alpha) * q[state/SimulationManager.actionSetRedFactor][action/SimulationManager.actionSetRedFactor] + parameter.alpha * (reward + parameter.delta * nextMaxQ);
     }
 
 
@@ -173,7 +186,7 @@ class QLearning {
         int newState = getState(actionsOfOtherFirms);
 
         // Observe maxQ for new state S'.
-        double nextMaxQ = q[newState][getMaxActionIndex(newState)];
+        double nextMaxQ = q[newState/SimulationManager.actionSetRedFactor][getMaxActionIndex(newState)/SimulationManager.actionSetRedFactor];
 
         // Calculate the total discounted reward (profit) by discounting each accrued reward (profits).
         double discountedTotalReward = 0;
@@ -186,7 +199,7 @@ class QLearning {
         discountedTotalReward = discountedTotalReward + Math.pow(parameter.delta, index) * nextMaxQ;
 
         // Update corresponding Q-matrix cell.
-        q[state][action] = (1 - parameter.alpha) * q[state][action] + parameter.alpha * discountedTotalReward;
+        q[state/SimulationManager.actionSetRedFactor][action/SimulationManager.actionSetRedFactor] = (1 - parameter.alpha) * q[state/SimulationManager.actionSetRedFactor][action/SimulationManager.actionSetRedFactor] + parameter.alpha * discountedTotalReward;
     }
 
     /**

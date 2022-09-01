@@ -30,6 +30,10 @@ class Firm {
         return competition.getIndependentVariable();
     }
 
+    double getProfit(){
+        return (competition.getIndependentVariable()*competition.getDependentVariable());
+    }
+
     /**
      * @return price or quantity of the firm in accordance with the type of competition.
      */
@@ -82,14 +86,18 @@ class Firm {
     //for (int m = 0; m < SimulationManager.MARKET_SIZE; m++) {
         try {
 
-            File csvFile = new File("out/SEQ-P-2/QMatrix_with" + simulationRun.getDegreeOfTacitCollusion() + "_collusion_of_Firm_with_ID_" + firm + "_of_Sim_No_" + (simulationRun.getSimulationRunNumber()+1) + ".csv");
+            //File csvFile = new File("out/SEQ-P-2/QMatrix_with" + simulationRun.getDegreeOfTacitCollusion() + "_collusion_of_Firm_with_ID_" + firm + "_of_Sim_No_" + (simulationRun.getSimulationRunNumber()+1) + ".csv");
+            //Snapshot with No. of periods in filename
+            File csvFile = new File("out/SEQ-P-2/QMatrix" + "_after_" + simulationRun.getNumberOfPeriods() + "_periods_with" + simulationRun.getDegreeOfTacitCollusion() + "_collusion_of_Firm_with_ID_" + firm + "_of_Sim_No_" + (simulationRun.getSimulationRunNumber()+1) + ".csv");
+
+
             PrintWriter out = new PrintWriter(csvFile);
             //out.println("Degree of Tacit Collusion of this matrix: " + simulationRun.getDegreeOfTacitCollusion());
             // Print whole qmatrix
-            for (int i = 0; i < qlearning.getQMatrix().length; i++) {
-            //for (int i = 0; i < ((qlearning.getQMatrix().length+1)/SimulationManager.actionSetRedFactor)+1; i++) {
-                for (int j = 0; j < qlearning.getQMatrix().length; j++) {
-                //for (int j = 0; j < ((qlearning.getQMatrix().length+1)/SimulationManager.actionSetRedFactor)+1; j++) {
+            // for (int i = 0; i < qlearning.getQMatrix().length; i++) {
+            for (int i = 0; i < ((qlearning.getQMatrix().length+1)/SimulationManager.actionSetRedFactor)+1; i++) {
+                //for (int j = 0; j < qlearning.getQMatrix().length; j++) {
+                for (int j = 0; j < ((qlearning.getQMatrix().length+1)/SimulationManager.actionSetRedFactor)+1; j++) {
                     //out.println(i + ". Zeile und " + j + ".Spalte, Wert:" + (qlearning.getQMatrix()[i][j]) + " ");
                     out.print((qlearning.getQMatrix()[i][j]) + ",");
                 }

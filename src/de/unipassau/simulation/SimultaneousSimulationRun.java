@@ -25,8 +25,7 @@ class SimultaneousSimulationRun extends SimulationRun {
                 has to be below its upper limit (minNumberOfConvergedPeriods)
         */
         while (super.getNumberOfPeriods() < SimulationManager.maxNumberOfPeriods
-                //||  super.getNumberOfConvergedPeriods() < SimulationManager.minNumberOfConvergedPeriods) {
-                &&  super.getNumberOfConvergedPeriods() < SimulationManager.minNumberOfConvergedPeriods) {
+                ||  super.getNumberOfConvergedPeriods() < SimulationManager.minNumberOfConvergedPeriods) {
 
             // Run episode for each firm.
             for (int i = 0; i < SimulationManager.MARKET_SIZE; i++) {
@@ -56,15 +55,6 @@ class SimultaneousSimulationRun extends SimulationRun {
             }
 
             super.setNumberOfPeriods(super.getNumberOfPeriods() + 1);
-        }
-
-        for (Firm firm : firms) {
-            //if ((super.getNumberOfConvergedPeriods() == SimulationManager.minNumberOfConvergedPeriods) || super.getNumberOfConvergedPeriods() == SimulationManager.maxNumberOfPeriods-1) {
-            if (super.getNumberOfPeriods() == SimulationManager.maxNumberOfPeriods) {
-                firm.MatrixOutput(firm);
-                //System.out.println(firm.getAction());
-
-            }
         }
 
         //System.out.println("Maximale Periode: " + getNumberOfPeriods());
