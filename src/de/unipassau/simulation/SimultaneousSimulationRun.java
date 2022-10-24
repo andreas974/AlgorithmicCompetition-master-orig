@@ -57,8 +57,6 @@ class SimultaneousSimulationRun extends SimulationRun {
             super.setNumberOfPeriods(super.getNumberOfPeriods() + 1);
         }
 
-        //System.out.println("Maximale Periode: " + getNumberOfPeriods());
-
     }
 
     /**

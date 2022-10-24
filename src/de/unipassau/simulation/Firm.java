@@ -75,6 +75,10 @@ class Firm {
         }
     }
 
+    /**
+     * Write Q-Matrix into .csv File
+     * Alternative print methods in comments
+     */
     public void MatrixOutput(Firm firm) {
 
         /*for (int i = 0; i < qlearning.returnMatrix().length; i++) {
@@ -120,7 +124,9 @@ class Firm {
         competition.calculateData(getAction(),getActionsOfOtherFirms());
     }
 
-
+    /**
+     * Returns Q-Matrix from qlearning
+     */
     double[][] getQMatrix() {
         double[][] qMatrix = qlearning.getQMatrix();
         return qMatrix;

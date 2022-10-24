@@ -51,7 +51,7 @@ class SequentialSimulationRun extends SimulationRun {
                 // Set the current firm's updated action.
                 currentFirm.setAction(actionOfCurrentFirm);
 
-                //Set deviation for current firm
+                //For analysis: Set deviation for current firm in selected period
                 /*if (super.getNumberOfPeriods()==49000005){
                     currentFirm.setAction(55);
                 }*/
@@ -78,6 +78,8 @@ class SequentialSimulationRun extends SimulationRun {
                     super.setNumberOfConvergedPeriods(0);
                 }
 
+
+                // For analysis: Write Q-Matrix after every 10.000 periods
                 /*for (Firm firm : firms) {
                     //if ((super.getNumberOfConvergedPeriods() == SimulationManager.minNumberOfConvergedPeriods) || super.getNumberOfConvergedPeriods() == SimulationManager.maxNumberOfPeriods-1) {
                     //if (super.getNumberOfPeriods() == SimulationManager.maxNumberOfPeriods) {
@@ -88,20 +90,21 @@ class SequentialSimulationRun extends SimulationRun {
                     }
                 }*/
 
+                // Just to check: Print Number of Period + Action
                 for (Firm firm : firms) {
                     //System.out.println(super.getNumberOfPeriods() + "," + ((firm.getAction()/SimulationManager.actionSetRedFactor)*SimulationManager.actionSetRedFactor));
                     //System.out.println(super.getNumberOfPeriods() + "," + firm.getAction()/5 + "," + firm.getProfit());
                     //System.out.println(super.getNumberOfPeriods() + "," + firm.getActionfromQMatrix());
                 }
 
-                //Selected Periods
+                // For analysis: Add Actions of selected Periods to ArrayList "data"
                 /*if (super.getNumberOfPeriods() >= 49000000 && super.getNumberOfPeriods() <= 49000020) {
                     for (Firm firm : firms) {
                         data.add(super.getNumberOfPeriods() + "," + (firm.getAction() / 5) + "," + firm.getProfit());
                     }
                 }*/
 
-                //All Periods
+                // For analysis: Add Actions of all Periods to ArrayList "data"
                 /*for (Firm firm : firms) {
                         data.add(super.getNumberOfPeriods() + "," + (firm.getAction() / 5) + "," + firm.getProfit());
                 }*/
@@ -117,7 +120,9 @@ class SequentialSimulationRun extends SimulationRun {
             else {
                 iterator = firms.iterator();
             }
-            for (Firm firm : firms) {
+
+            // For analysis: Return Q-Matrix as csv after Simulation is done
+            /*for (Firm firm : firms) {
                 if ((super.getNumberOfConvergedPeriods() == SimulationManager.minNumberOfConvergedPeriods) || super.getNumberOfConvergedPeriods() == SimulationManager.maxNumberOfPeriods-1) {
                 //if (super.getNumberOfPeriods() == SimulationManager.maxNumberOfPeriods) {
 
@@ -127,10 +132,11 @@ class SequentialSimulationRun extends SimulationRun {
                     //System.out.println(firm.getAction());
 
                 }
-            }
+            }*/
 
         }
 
+        // For analysis: Return Q-Matrix as csv after Simulation is done
         for (Firm firm : firms) {
             if ((super.getNumberOfConvergedPeriods() == SimulationManager.minNumberOfConvergedPeriods) || super.getNumberOfConvergedPeriods() == SimulationManager.maxNumberOfPeriods-1) {
                 //if (super.getNumberOfPeriods() == SimulationManager.maxNumberOfPeriods) {
@@ -143,6 +149,7 @@ class SequentialSimulationRun extends SimulationRun {
                 }
         }
 
+        // For analysis: Write csv file for ArrayList "data"
         /*try {
 
             File csvFileActions = new File("out/SEQ-P-2/AllActions_RunNo_" + getSimulationRunNumber() + ".csv");
@@ -154,8 +161,6 @@ class SequentialSimulationRun extends SimulationRun {
         } catch (Exception ex) {
 
         }*/
-
-        //System.out.println("Maximale Periode: " + getNumberOfPeriods());
 
     }
 

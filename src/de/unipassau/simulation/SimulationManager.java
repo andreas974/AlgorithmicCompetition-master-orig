@@ -17,7 +17,7 @@ class SimulationManager {
     // Simulation settings
     static final int numberOfSimulationRuns = 1;                                       // Desired number of single simulation runs
     static final int sizeOfActionSet = (int) Competition.omega +1;                                             // Total number of possible states and actions
-    static final int actionSetRedFactor = 5;                                            //100/actionSetRedFactor = Number of Actions
+    static final int actionSetRedFactor = 5;                                            //100/actionSetRedFactor = Number of Actions   //To reduce the number of actions
     // Maximum number of periods per simulation run
     static final int maxNumberOfPeriods = 50000000;
     static final int minNumberOfConvergedPeriods = (int) (maxNumberOfPeriods * 0.1);    // Number of identical periods necessary to assume convergence of the algorithms

@@ -55,7 +55,7 @@ class QLearning {
         numberOfEpisodes++;
 
         // Decrease epsilon.
-        //if loop only for analytic porpuses
+        // For analysis: Decrease epsilon only for certain amount of periods
         /*if (numberOfEpisodes < 12500000) {
             parameter.decreaseEpsilon(numberOfEpisodes);
         }
